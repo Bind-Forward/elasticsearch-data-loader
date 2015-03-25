@@ -30,9 +30,9 @@ html.no-js(lang='')
     .container
       p Hello world! This is a tool to load CSV files to Elasticsearch.
       //form
-      input#url(value='http://localhost:9200')
-      input#index(value='govwiki')
-      input#type(value='gov')
+      input#hosts(value='localhost:9200')
+      input#indexName(value='govwiki')
+      input#typeName(value='gov')
       input#chooseFileButton(type='file')
       input#readFileButton(type='button' value='Read File')
 
@@ -46,4 +46,7 @@ html.no-js(lang='')
     //script(src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js')
     script(src='js/client-line-navigator/line-navigator.min.js')
     //script(src='js/client-line-navigator/file-navigator.min.js')
+    script(src='bower_components/elasticsearch/elasticsearch.jquery.min.js')
+    //script(src='bower_components/underscore/underscore-min.js')
+    script(src='bower_components/comma-separated-values/csv.min.js')
     script(src='static/bundle.js')

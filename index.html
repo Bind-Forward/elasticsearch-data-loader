@@ -29,9 +29,9 @@
     <div class="container">
       <p>Hello world! This is a tool to load CSV files to Elasticsearch.</p>
       <!--form-->
-      <input id="url" value="http://localhost:9200">
-      <input id="index" value="govwiki">
-      <input id="type" value="gov">
+      <input id="hosts" value="localhost:9200">
+      <input id="indexName" value="govwiki">
+      <input id="typeName" value="gov">
       <input id="chooseFileButton" type="file">
       <input id="readFileButton" type="button" value="Read File">
       <div class="progress">
@@ -44,6 +44,9 @@
     <!--script(src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js')-->
     <script src="js/client-line-navigator/line-navigator.min.js"></script>
     <!--script(src='js/client-line-navigator/file-navigator.min.js')-->
+    <script src="bower_components/elasticsearch/elasticsearch.jquery.min.js"></script>
+    <!--script(src='bower_components/underscore/underscore-min.js')-->
+    <script src="bower_components/comma-separated-values/csv.min.js"></script>
     <script src="static/bundle.js"></script>
   </body>
 </html>
