@@ -1,52 +1,66 @@
 FileNavigator = require './filenavigator.coffee'
 
 
-show_progress = (p,n) ->
+show_progress = (progress,number) ->
   bar=$(".progress-bar")
-  bar.css "width", "#{p}%"
-  bar.text "#{p}%"
-  $('#counter').text n
+  bar.css "width", "#{progress}%"
+  bar.text "#{progress}%"
+  $('#counter').text number
+  console.log "#{number} : lines #{progress}"
+
+# Globals
+url = "http://localhost:9200/"
+index = "govwiki"
+type = "govs"
+navigator = undefined
+file = undefined
+lines_in_batch =5000
+indexToStartWith = 0
+options = {chunkSize: 1024 * 16} # chunkSize: 1024 * 1024 * 4
 
 
-window.readFile = ->
+init_ui = ->
+  file = document.getElementById('chooseFileButton').files[0]
+  show_progress 0,0
+  
 
-  lines_in_batch =5000
+prepare_json =(index, lines) ->
+  return ["some","json"]
+  
 
-  file = document.getElementById('input00').files[0]
-  navigator = new FileNavigator(file, chunkSize: 1024 * 16 ) # chunkSize: 1024 * 1024 * 4
-  indexToStartWith = 0
-  # starting from beginning
-
-  linesReadHandler = (err, index, lines, eof, progress) ->
-    
-    # Error happened
-    if err
-      return
-    
-    # Reading lines
-    i = 0
-    while i < lines.length
-      lineIndex = index + i
-      line = lines[i]
-      # Do something with line
-      #console.log(lineIndex+": "+line);
-      i++
-    
-    console.log "#{lineIndex+1} : lines #{progress}"
-    show_progress(progress, lineIndex+1)
-
-    # End of file
-    if eof
-      console.log lineIndex + 1 + ' lines were read'
-      show_progress(progress, lineIndex+1)
-      return
-    
+send_to_server = (index, lines, eof, progress, json) ->
+  setTimeout =>
+    show_progress(progress, index+lines.length)
+    console.log "sended json: #{json}"
+    if eof then return
     # Reading next chunk, adding number of lines read to first line in current chunk
     navigator.readLines index + lines.length, lines_in_batch,  linesReadHandler
     #navigator.readSomeLines index + lines.length,  linesReadHandler
     return
+  , 1000
 
 
+
+process_lines = (index, lines, eof, progress) ->
+  json = prepare_json index, lines
+  send_to_server index, lines, eof, progress, json
+
+  
+
+linesReadHandler = (err, index, lines, eof, progress) ->
+  if err then  return
+  process_lines index, lines, eof, progress
+  return
+
+  
+readFile = ->
+  navigator = new FileNavigator(file, options)
   navigator.readLines indexToStartWith, lines_in_batch, linesReadHandler
   #navigator.readSomeLines indexToStartWith, linesReadHandler
   return
+
+
+$('#chooseFileButton').change => init_ui()
+$('#readFileButton').click => readFile()
+
+
