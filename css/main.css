@@ -96,10 +96,28 @@ textarea {
    ========================================================================== */
 
 
+#head_table_container {
+  overflow-x: auto;
+  position.relative;
+}
+
+#head_table_container th {
+  border: 1px solid #DDD;
+  overflow: hidden;
+  height: 24px;
+  width: 150px;
+  white-space: nowrap;
+
+}
+
 
 #head_table_container td {
   border: 1px solid #DDD;
-}
+  overflow: hidden;
+  height: 24px;
+  max-width: 150px;
+  white-space: nowrap;
 
+}
 
 

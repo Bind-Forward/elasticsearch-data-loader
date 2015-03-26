@@ -1,13 +1,5 @@
 FileNavigator = require './filenavigator.coffee'
 
-
-show_progress = (progress,number) ->
-  bar=$(".progress-bar")
-  bar.css "width", "#{progress}%"
-  bar.text "#{progress}%"
-  $('#counter').text number
-  console.log "#{number} : lines #{progress}"
-
 # Globals
 hosts = "localhost:9200"
 index_name = "govwiki"
@@ -18,14 +10,22 @@ field_names = []
 navigator = undefined
 file = undefined
 lines_in_batch =10000
-indexToStartWith = 0
-options = {chunkSize: 1024 * 1024 * 2} # chunkSize: 1024 * 1024 * 4
+max_number_of_records=20000
+
+options = {chunkSize: 1024 * 1024 * 1} # chunkSize: 1024 * 1024 * 4
 cast = undefined
 
-get_field_types =() ->
-  sels =$('.type-selector')
-  types = (sel.value for sel in sels)
-  return types
+# ==============================================================
+
+
+
+show_progress = (progress,number) ->
+  bar=$(".progress-bar")
+  bar.css "width", "#{progress}%"
+  bar.text "#{progress}%"
+  $('#counter').text number
+  console.log "#{number} : lines #{progress}%"
+
 
 
 build_head_table =() ->
@@ -89,14 +89,14 @@ build_head_table =() ->
   return
 
 
-
+# prepare GUI after the user selects a file
 init_ui = ->
   file = document.getElementById('chooseFileButton').files[0]
   show_progress 0,0
   build_head_table()
 
   
-
+# converts text to JSON. Processor consuming operation. TODO: move to a worker.
 prepare_json =(index, lines) ->
   if not lines then return
   res = []
@@ -105,6 +105,7 @@ prepare_json =(index, lines) ->
     lines.shift()
 
   for line,i in lines
+    if index+i > max_number_of_records then return res
     operation = { index:  { _index: index_name, _type: type_name, _id: index+i } }
     field_values = line.split ','
     #record = _.object field_names, field_values
@@ -114,51 +115,64 @@ prepare_json =(index, lines) ->
 
   return res
   
-
-send_to_server = (index, lines, eof, progress, json) ->
-  #setTimeout =>
-  #  show_progress(progress, index+lines.length)
-  #  console.log " #{lines.length} lines sent"
-  #  
-  #  if eof then return
-  #  # Reading next chunk, adding number of lines read to first line in current chunk
-  #  navigator.readLines index + lines.length, lines_in_batch,  linesReadHandler
-  #  #navigator.readSomeLines index + lines.length,  linesReadHandler
-  #  return
-  #, 1000
   
+
+# Reading next chunk
+read_lines =(i) ->
+  #navigator.readLines i, lines_in_batch,  linesReadHandler
+  navigator.readSomeLines i,  linesReadHandler
+  return
+
+
+
+send_json_to_server = (index, lines, eof, progress, json) ->
+  if index>max_number_of_records
+    return
+  if json.length is 0
+    return
+
   es_client.bulk { body: json }, (err, resp) =>
+
     if err
       alert "Sorry, #{err.message}"
       console.log err
       return
     else
-      show_progress(progress, index+lines.length)
-      console.log " #{lines.length} lines sent"
+      show_progress(progress, index+json.length/2) # lines.length)
+      console.log " #{json.length/2} lines sent"
       
       if eof then return
-      # Reading next chunk, adding number of lines read to first line in current chunk
-      #navigator.readLines index + lines.length, lines_in_batch,  linesReadHandler
-      navigator.readSomeLines index + lines.length,  linesReadHandler
+      # adding number of lines read to first line in current chunk
+      read_lines index + json.length/2 #lines.length
       return
     return
 
   return
 
 
-process_lines = (index, lines, eof, progress) ->
 
-  json = prepare_json index, lines
-  send_to_server index, lines, eof, progress, json
 
   
-
+# works when a next portion of file has been read
 linesReadHandler = (err, index, lines, eof, progress) ->
   if err then  return
-  process_lines index, lines, eof, progress
+  if index>max_number_of_records
+    return
+  json = prepare_json index, lines
+  send_json_to_server index, lines, eof, progress, json
   return
 
-  
+
+
+# returns array of feild types to save in the global cast variable
+get_field_types =() ->
+  sels =$('.type-selector')
+  types = (sel.value for sel in sels)
+  return types
+
+
+
+# starts actually read the file  
 readFile = ->
   hosts = $('#hosts').val()
   index_name = $('#indexName').val()
@@ -169,11 +183,12 @@ readFile = ->
   cast = get_field_types()
 
   navigator = new FileNavigator(file, options)
-  #navigator.readLines indexToStartWith, lines_in_batch, linesReadHandler
-  navigator.readSomeLines indexToStartWith, linesReadHandler
+  read_lines 0
   return
 
 
+
+# assign handlers to UI 
 $('#chooseFileButton').change => init_ui()
 $('#readFileButton').click => readFile()
 
