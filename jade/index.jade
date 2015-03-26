@@ -30,10 +30,11 @@ html.no-js(lang='')
     .container
       p Hello world! This is a tool to load CSV files to Elasticsearch.
       //form
-      input#hosts(value='localhost:9200')
+      input#hosts(value='55.55.55.55:9200')
       input#indexName(value='govwiki')
       input#typeName(value='gov')
       input#chooseFileButton(type='file')
+      #head_table_container
       input#readFileButton(type='button' value='Read File')
 
       .progress
