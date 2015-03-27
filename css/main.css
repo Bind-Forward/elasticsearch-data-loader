@@ -9,13 +9,13 @@
 /* ==========================================================================
    Base styles: opinionated defaults
    ========================================================================== */
-
+/*
 html {
     color: #222;
     font-size: 1em;
     line-height: 1.4;
 }
-
+*/
 /*
  * Remove text-shadow in selection highlight:
  * https://twitter.com/miketaylr/status/12228805301
@@ -94,30 +94,39 @@ textarea {
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
+body {
+  padding-bottom: 100px;
+}
 
+p {
+
+  margin-top: 20px;
+  margin-bottom:20px;
+}
 
 #head_table_container {
   overflow-x: auto;
   position.relative;
+  margin-bottom:10px;
+  margin-top:10px;
 }
 
 #head_table_container th {
-  border: 1px solid #DDD;
-  overflow: hidden;
-  height: 24px;
-  width: 150px;
-  white-space: nowrap;
-
+  padding-bottom:0;
+  padding-top:0;
 }
 
 
 #head_table_container td {
-  border: 1px solid #DDD;
-  overflow: hidden;
-  height: 24px;
-  max-width: 150px;
-  white-space: nowrap;
+  padding-bottom:0;
+  padding-top:0;
 
 }
 
-
+#head_table_container * {
+  font-size:14px;
+}
+.step-4 {
+  margin-top:20px;
+  margin-bottom:200px;
+}

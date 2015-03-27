@@ -12,8 +12,8 @@ html.no-js(lang='')
 
 
     // Bootstrap core CSS
-    link(href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css", rel='stylesheet')
-    //link(href='//maxcdn.bootstrapcdn.com/bootswatch/3.3.2/paper/bootstrap.min.css', rel='stylesheet')
+    //link(href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css", rel='stylesheet')
+    link(href='//maxcdn.bootstrapcdn.com/bootswatch/3.3.2/paper/bootstrap.min.css', rel='stylesheet')
     
     link(rel='stylesheet', href='css/main.css')
 
@@ -28,18 +28,27 @@ html.no-js(lang='')
         |  to improve your experience.
     // Add your site or application content here
     .container
-      p Hello world! This is a tool to load CSV files to Elasticsearch.
-      //form
-      input#hosts(value='55.55.55.55:9200')
-      input#indexName(value='govwiki')
-      input#typeName(value='gov')
+      h5 1. Enter Elasticsearch address:port index and type 
+      form.form-inline
+        input#hosts.form-control(value='55.55.55.55:9200')
+        input#indexName.form-control(value='govwiki')
+        input#typeName.form-control(value='gov')
+      <br>
+      
+      h5 2. Select a CSV file
       input#chooseFileButton(type='file')
-      #head_table_container
-      input#readFileButton(type='button' value='Read File')
+      <br>
+      .panel.panel-default.step-3 
+        .panel-body
+          h5.step-3 Check field names and data types
+        #head_table_container.panel-body
 
-      .progress
-        .progress-bar.progress-bar-success(role='progressbar', aria-valuenow='60', aria-valuemin='0', aria-valuemax='100', style='width: 0;') 
-      #counter
+      h5.step-3 3. Click to upload data
+      input#readFileButton.step-3.btn.btn-primary(type='button' value='Read File')
+      .step-4  
+        .progress
+          .progress-bar.progress-bar-success(role='progressbar', aria-valuenow='60', aria-valuemin='0', aria-valuemax='100', style='width: 0;') 
+        #counter
     
     script(src='//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js')
     script.
