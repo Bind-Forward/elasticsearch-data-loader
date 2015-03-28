@@ -113,7 +113,7 @@ init_ui = ->
 # prm is { index:index, lines:lines, field_names:field_names, 
 # max_number_of_records:max_number_of_records, index_name:index_name, type_name:type_name, cast:cast }
 convert_lines_to_json2 =(prm) ->
-  importScripts('../js/csv.js')
+  importScripts('js/csv.js')
   if not prm.lines then return
   res = []
   if prm.index is 0
