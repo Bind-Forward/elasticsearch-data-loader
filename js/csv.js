@@ -418,7 +418,7 @@
     });
   } else if (typeof module === "object" && module.exports) {
     module.exports = CSV;
-  } else if (window) {
-    window.CSV = CSV;
+  } else if (self) {
+    self.CSV = CSV;
   }
 })();

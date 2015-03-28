@@ -130,3 +130,10 @@ p {
   margin-top:20px;
   margin-bottom:200px;
 }
+#counter {
+  margin-left:30px;
+}
+
+.first-column {
+  display:none;
+}

@@ -14,6 +14,7 @@ html.no-js(lang='')
     // Bootstrap core CSS
     //link(href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css", rel='stylesheet')
     link(href='//maxcdn.bootstrapcdn.com/bootswatch/3.3.2/paper/bootstrap.min.css', rel='stylesheet')
+    //link(rel='stylesheet', href='bower_components/flat-ui/dist/css/flat-ui.css')
     
     link(rel='stylesheet', href='css/main.css')
 
@@ -29,26 +30,31 @@ html.no-js(lang='')
     // Add your site or application content here
     .container
       h5 1. Enter Elasticsearch address:port index and type 
+      <br>
       form.form-inline
         input#hosts.form-control(value='55.55.55.55:9200')
         input#indexName.form-control(value='govwiki')
         input#typeName.form-control(value='gov')
       <br>
       
-      h5 2. Select a CSV file
-      input#chooseFileButton(type='file')
+      h5 2. CSV
+      form.form-inline
+        input#chooseFileButton.form-control(type='file')
       <br>
       .panel.panel-default.step-3 
         .panel-body
           h5.step-3 Check field names and data types
         #head_table_container.panel-body
 
-      h5.step-3 3. Click to upload data
-      input#readFileButton.step-3.btn.btn-primary(type='button' value='Read File')
+      h5.step-3 3. 
+        input#readFileButton.step-3.btn.btn-primary(type='button' value='Upload')
+        span.step-4
+          span#counter
       .step-4  
         .progress
           .progress-bar.progress-bar-success(role='progressbar', aria-valuenow='60', aria-valuemin='0', aria-valuemax='100', style='width: 0;') 
-        #counter
+        span.step-4
+          span#status
     
     script(src='//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js')
     script.
@@ -58,5 +64,6 @@ html.no-js(lang='')
     //script(src='js/client-line-navigator/file-navigator.min.js')
     script(src='bower_components/elasticsearch/elasticsearch.jquery.min.js')
     //script(src='bower_components/underscore/underscore-min.js')
-    script(src='bower_components/comma-separated-values/csv.min.js')
+    //script(src='bower_components/comma-separated-values/csv.min.js')
+    script(src='js/vendor/catiline.min.js')
     script(src='static/bundle.js')
