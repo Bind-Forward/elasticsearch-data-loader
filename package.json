@@ -7,12 +7,14 @@
   "license": "MIT",
   "scripts": {
     "push": "git add -A . && git commit -am 'v' && git push",
+    "stylus": "stylus css/main.styl",
+    "stylusw": "stylus -w css/main.styl",
     "jade": "jade jade -P -o .",
     "jadew": "jade jade -P -w -o .",
     "coffee": "browserify -d -t coffeeify coffee/main.coffee -o static/bundle.js",
     "coffeew": "watchify  -d -t coffeeify coffee/main.coffee -o static/bundle.js",
-    "watch": "npm run jadew & npm run coffeew",
-    "dev": "http-server -s -o -a localhost & npm run jadew & npm run coffeew & echo 'Launch browser and start editing files' ",
+    "dev": "npm run live-reload & npm run start & npm run jadew & npm run coffeew & npm run stylusw & echo 'Launch browser and start editing files' ",
+    "live-reload": "live-reload  index.html css static --port=9090 --delay=500",
     "start": "http-server -s -o -a localhost",
     "serve": "node server.js"
   },
@@ -37,6 +39,7 @@
     "elasticsearch": "^3.1.3",
     "http-server": "^0.7.5",
     "jade": "^1.9.2",
+    "live-reload": "^1.1.0",
     "serve-static": "^1.9.1",
     "watchify": "^2.6.0"
   },

@@ -11,7 +11,7 @@ file = undefined
 lines_in_batch =10000
 max_number_of_records=2000000000
 
-options = {chunkSize: 1024 * 1024 * 2} # chunkSize: 1024 * 1024 * 4
+options = {chunkSize: 1024 * 512 * 1} # chunkSize: 1024 * 1024 * 4
 cast = undefined
 
 worker=undefined

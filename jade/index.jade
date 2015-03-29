@@ -21,32 +21,71 @@ html.no-js(lang='')
     script(src='js/vendor/modernizr-2.8.3.min.js')
   body
     //if lt IE 8
-      p.browserupgrade
-        | You are using an 
-        strong outdated
-        |  browser. Please 
-        a(href='http://browsehappy.com/') upgrade your browser
-        |  to improve your experience.
+      <p class="browserupgrade">
+        You are using an outdated  browser. Please 
+        <a href='http://browsehappy.com/'> upgrade your browser</a>
+        to improve your experience.</p>
     // Add your site or application content here
+
+
+
+    .navbar.navbar-inverse(role='navigation', style='padding-bottom:10px;')
+      .container
+        .row(style="border-bottom:0px solid white;")
+          a.navbar-brand(href='#') CSV 2 Elastic
+        //.navbar-header.row
+          a.navbar-brand(href='#') CSV 2 Elastic
+          .navbar-form.text-right(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+            a(href='#') settings
+
+          //button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+         
+
+        
+
+        //.navbar-collapse.collapse
+          form.navbar-form.navbar-right(role='form')
+            .form-group
+              input.form-control(type='text', placeholder='Email')
+            .form-group
+              input.form-control(type='password', placeholder='Password')
+            button.btn.btn-success(type='submit') Sign in
+
+        form.row(data-persist="garlic")
+          .col-xs-4
+            label.control-liabel(for='hosts') address:port
+            input#hosts.form-control(name="hosts", type='text', placeholder='localhost:9200')
+          .col-xs-4
+            label.control-liabel(for='indexName') index name
+            input#indexName.form-control(name="indexName", type='text', placeholder='myindex')
+          .col-xs-4
+            label.control-liabel(for='typeName') type name
+            input#typeName.form-control(name="typeName", type='text', placeholder='mytype')
+        // /.navbar-collapse
+
+
+
+
     .container
-      h5 1. Enter Elasticsearch address:port index and type 
-      <br>
-      form.form-inline
-        input#hosts.form-control(value='55.55.55.55:9200')
-        input#indexName.form-control(value='govwiki')
-        input#typeName.form-control(value='gov')
-      <br>
-      
-      h5 2. CSV
-      form.form-inline
-        input#chooseFileButton.form-control(type='file')
-      <br>
+      .row
+          .col-xs-4
+            input#chooseFileButton.filestyle(type='file', 
+              data-buttonText="&nbsp;&nbsp;Choose CSV file", 
+              data-buttonName="btn-primary", 
+              data-size="g", 
+              data-buttonBefore="false",
+              )
+      br
       .panel.panel-default.step-3 
         .panel-body
           h5.step-3 Check field names and data types
         #head_table_container.panel-body
 
-      h5.step-3 3. 
+      .step-3
         input#readFileButton.step-3.btn.btn-primary(type='button' value='Upload')
         span.step-4
           span#counter
@@ -59,11 +98,14 @@ html.no-js(lang='')
     script(src='//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js')
     script.
       window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\\/script>')
-    //script(src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js')
+    script(src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js')
     script(src='js/client-line-navigator/line-navigator.min.js')
     //script(src='js/client-line-navigator/file-navigator.min.js')
     script(src='bower_components/elasticsearch/elasticsearch.jquery.min.js')
     //script(src='bower_components/underscore/underscore-min.js')
     //script(src='bower_components/comma-separated-values/csv.min.js')
     script(src='js/vendor/catiline.min.js')
+    script(src='js/vendor/bootstrap-filestyle.min.js')
+    script(src='js/vendor/garlic.min.js')
+    script(src='http://localhost:9090')
     script(src='static/bundle.js')
