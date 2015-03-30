@@ -15,7 +15,7 @@
     "coffeew": "watchify  -d -t coffeeify coffee/main.coffee -o static/bundle.js",
     "dev": "npm run live-reload & npm run start & npm run jadew & npm run coffeew & npm run stylusw & echo 'Launch browser and start editing files' ",
     "live-reload": "live-reload  index.html css static --port=9090 --delay=500",
-    "start": "http-server -s -o -a localhost",
+    "start": "http-server  -s -o",
     "serve": "node server.js"
   },
   "repository": {
@@ -41,6 +41,7 @@
     "jade": "^1.9.2",
     "live-reload": "^1.1.0",
     "serve-static": "^1.9.1",
+    "stylus": "^0.50.0",
     "watchify": "^2.6.0"
   },
   "bugs": {
